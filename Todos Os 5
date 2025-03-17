@@ -1,0 +1,368 @@
+1)
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+class Participante {
+    private String nomeCompleto;
+    private String email;
+    private String dataInscricao;
+
+    public Participante(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+        this.dataInscricao = "12/03/2025"; // data padrão
+    }
+
+    // Construtor completo
+    public Participante(String nomeCompleto, String email, String dataInscricao) {
+        this.nomeCompleto = nomeCompleto;
+        this.email = email;
+        this.dataInscricao = dataInscricao;
+    }
+
+    // Métodos get
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDataInscricao() {
+        return dataInscricao;
+    }
+
+    // Método set para email com validação
+    public void setEmail(String email) {
+        if (email.contains("@")) {
+            this.email = email;
+        } else {
+            System.out.println("Email inválido!");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Participante p1 = new Participante("João Silva");
+        Participante p2 = new Participante("Maria Oliveira", "maria@exemplo.com", "15/03/2025");
+
+        System.out.println("Participante 1:");
+        System.out.println("Nome: " + p1.getNomeCompleto());
+        System.out.println("Data Inscrição: " + p1.getDataInscricao());
+
+        System.out.println("Participante 2:");
+        System.out.println("Nome: " + p2.getNomeCompleto());
+        System.out.println("Email: " + p2.getEmail());
+        System.out.println("Data Inscrição: " + p2.getDataInscricao());
+    }
+}
+Exercício 2: Controle de Empréstimo de Livros
+class Livro {
+    private String titulo;
+    private String autor;
+    private boolean disponivel;
+
+    // Construtor
+    public Livro(String titulo, String autor) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.disponivel = true;
+    }
+
+    // Métodos get
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    // Método emprestar
+    public String emprestar() {
+        if (disponivel) {
+            disponivel = false;
+            return "Empréstimo realizado com sucesso.";
+        } else {
+            return "Livro não disponível.";
+        }
+    }
+
+    // Método devolver
+    public void devolver() {
+        disponivel = true;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Livro livro1 = new Livro("Java para Iniciantes", "Carlos Pereira");
+
+        System.out.println(livro1.emprestar());
+        System.out.println("Disponibilidade após empréstimo: " + livro1.isDisponivel());
+
+        livro1.devolver();
+        System.out.println("Disponibilidade após devolução: " + livro1.isDisponivel());
+    }
+}
+Exercício 3: Simulação de Equipamentos Esportivos (Classe Abstrata)
+
+abstract class Equipamento {
+    private String nome;
+    private double precoAluguel;
+
+    // Construtor
+    public Equipamento(String nome, double precoAluguel) {
+        this.nome = nome;
+        this.precoAluguel = precoAluguel;
+    }
+
+    // Métodos get
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPrecoAluguel() {
+        return precoAluguel;
+    }
+
+    // Método abstrato
+    public abstract int definirDurabilidade();
+}
+
+class Bicicleta extends Equipamento {
+    private String tipo;
+
+    // Construtor
+    public Bicicleta(String nome, double precoAluguel, String tipo) {
+        super(nome, precoAluguel);
+        this.tipo = tipo;
+    }
+
+    // Implementação do método abstrato
+    @Override
+    public int definirDurabilidade() {
+        return 50; // Durabilidade fixa de 50 horas
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+}
+
+class Bola extends Equipamento {
+    private String material;
+
+    // Construtor
+    public Bola(String nome, double precoAluguel, String material) {
+        super(nome, precoAluguel);
+        this.material = material;
+    }
+
+    // Implementação do método abstrato
+    @Override
+    public int definirDurabilidade() {
+        return 20; // Durabilidade fixa de 20 horas
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Equipamento bicicleta = new Bicicleta("Bicicleta de Montanha", 15.0, "Montanha");
+        Equipamento bola = new Bola("Bola de Futebol", 10.0, "Couro");
+
+        System.out.println("Bicicleta - Durabilidade: " + bicicleta.definirDurabilidade() + " horas");
+        System.out.println("Bola - Durabilidade: " + bola.definirDurabilidade() + " horas");
+    }
+}
+Exercício 4: Gerenciamento de Projetos Criativos (Polimorfismo)
+
+abstract class Projeto {
+    private String titulo;
+    private String dataInicio;
+    private double orcamento;
+
+    // Construtor
+    public Projeto(String titulo, String dataInicio, double orcamento) {
+        this.titulo = titulo;
+        this.dataInicio = dataInicio;
+        this.orcamento = orcamento;
+    }
+
+    // Métodos get
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDataInicio() {
+        return dataInicio;
+    }
+
+    public double getOrcamento() {
+        return orcamento;
+    }
+
+    // Método set para orcamento
+    public void setOrcamento(double orcamento) {
+        this.orcamento = orcamento;
+    }
+
+    // Método abstrato
+    public abstract int calcularPrazo();
+}
+
+class Filme extends Projeto {
+    private int duracaoMinutos;
+
+    // Construtor
+    public Filme(String titulo, String dataInicio, double orcamento, int duracaoMinutos) {
+        super(titulo, dataInicio, orcamento);
+        this.duracaoMinutos = duracaoMinutos;
+    }
+
+    // Implementação do método abstrato
+    @Override
+    public int calcularPrazo() {
+        return duracaoMinutos / 10;
+    }
+}
+
+class Musica extends Projeto {
+    private int numeroNotas;
+
+    // Construtor
+    public Musica(String titulo, String dataInicio, double orcamento, int numeroNotas) {
+        super(titulo, dataInicio, orcamento);
+        this.numeroNotas = numeroNotas;
+    }
+
+    // Implementação do método abstrato
+    @Override
+    public int calcularPrazo() {
+        return numeroNotas / 50;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Projeto filme = new Filme("Aventura no Espaço", "01/03/2025", 500000.0, 120);
+        Projeto musica = new Musica("Sinfonia do Infinito", "05/03/2025", 30000.0, 200);
+
+        System.out.println("Prazo do Filme: " + filme.calcularPrazo() + " dias");
+        System.out.println("Prazo da Música: " + musica.calcularPrazo() + " dias");
+    }
+}
+Exercício 5: Sistema de Monitoramento Ambiental
+
+import java.util.ArrayList;
+
+abstract class Sensor {
+    private String localizacao;
+    private int nivelBateria;
+    private boolean ativo;
+
+    // Construtor
+    public Sensor(String localizacao) {
+        this.localizacao = localizacao;
+        this.nivelBateria = 100;
+        this.ativo = true;
+    }
+
+    // Métodos get
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public int getNivelBateria() {
+        return nivelBateria;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    // Método set para nivelBateria
+    public void setNivelBateria(int nivelBateria) {
+        if (nivelBateria >= 0 && nivelBateria <= 100) {
+            this.nivelBateria = nivelBateria;
+            if (nivelBateria <= 0) {
+                this.ativo = false;
+            }
+        }
+    }
+
+    // Método abstrato
+    public abstract double coletarDado();
+}
+
+class SensorTemperatura extends Sensor {
+    private String unidade;
+
+    // Construtor
+    public SensorTemperatura(String localizacao, String unidade) {
+        super(localizacao);
+        this.unidade = unidade;
+    }
+
+    @Override
+    public double coletarDado() {
+        return 25.5; // Valor fixo
+    }
+}
+
+class SensorUmidade extends Sensor {
+    private int precisao;
+
+    // Construtor
+    public SensorUmidade(String localizacao, int precisao) {
+        super(localizacao);
+        this.precisao = precisao;
+    }
+
+    @Override
+    public double coletarDado() {
+        return 60.0; // Valor fixo
+    }
+}
+
+class EstacaoMonitoramento {
+    private ArrayList<Sensor> sensores = new ArrayList<>();
+
+    public void adicionarSensor(Sensor sensor) {
+        sensores.add(sensor);
+    }
+
+    public void verificarEstado() {
+        for (Sensor sensor : sensores) {
+            if (sensor.isAtivo()) {
+                System.out.println("Sensor em " + sensor.getLocalizacao() + " está ativo.");
+                System.out.println("Dado coletado: " + sensor.coletarDado());
+            } else {
+                System.out.println("Sensor em " + sensor.getLocalizacao() + " está inativo.");
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        EstacaoMonitoramento estacao = new EstacaoMonitoramento();
+
+        Sensor sensorTemperatura = new SensorTemperatura("Sala 1", "Celsius");
+        Sensor sensorUmidade = new SensorUmidade("Sala 2", 90);
+
+        estacao.adicionarSensor(sensorTemperatura);
+        estacao.adicionarSensor(sensorUmidade);
+
+        estacao.verificarEstado();
+    }
+}
